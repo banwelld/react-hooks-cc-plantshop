@@ -1,24 +1,10 @@
 import React, { useState } from "react";
 
-function NewPlantForm({ setterCallback }) {
+function NewPlantForm({ pushNewPlant }) {
 
   // State variables
 
   const [plantInfo, setPlantInfo] = useState({ name: '', image: '', price: '' });
-
-  // Server interaction function
-
-  const addNewPlant = () => {
-    fetch("http://localhost:6001/plants", {
-      method: "POST",
-      headers: {
-        "Content-Type": "Application/JSON",
-      },
-      body: JSON.stringify(plantInfo),
-    })
-     .then((r) => r.json())
-     .then((newPlant) => setterCallback(newPlant));
-  };
 
   // Event handlers
 
@@ -28,7 +14,7 @@ function NewPlantForm({ setterCallback }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addNewPlant();
+    pushNewPlant(plantInfo);
     setPlantInfo({ name: '', image: '', price: '' });
   };
 

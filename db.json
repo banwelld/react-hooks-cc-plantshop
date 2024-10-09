@@ -41,24 +41,6 @@
       "name": "Fiddle Leaf Fig",
       "image": "./images/fiddle-leaf-fig.jpg",
       "price": 55
-    },
-    {
-      "name": "Spider Plant",
-      "image": "https://cdn.shopify.com/s/files/1/0068/4215/5090/t/115/assets/523d2c040643--pl-spider-plant-6IN-po-grower-1_990x.jpg",
-      "price": "10.49",
-      "id": 8
-    },
-    {
-      "name": "Peace Lilly",
-      "image": "https://cdn.shopify.com/s/files/1/0068/4215/5090/t/115/assets/b611d9cbe0e6--pl-Peace-Lily-4IN-po-coco_990x.jpg",
-      "price": "20.97",
-      "id": 9
-    },
-    {
-      "name": "Anthurium",
-      "image": "https://cdn.shopify.com/s/files/1/0068/4215/5090/files/c2adf0ae9886--pl-FlamingoFlower_9_990x.jpg",
-      "price": "13.09",
-      "id": 10
     }
   ]
 }
