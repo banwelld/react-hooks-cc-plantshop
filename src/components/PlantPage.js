@@ -54,8 +54,8 @@ function PlantPage() {
 
   const deleteSetter = (plantId) => {
     const newPlants = plants.filter((plant) => plant.id!== plantId);
-    setPlants([...newPlants]);
-    setShowPlants([...newPlants]);
+    setPlants(newPlants);
+    setShowPlants(newPlants);
   };
 
   // Component JSX

@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import CardButton from './CardButton';
 
 function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price } }) {
 
@@ -46,6 +47,7 @@ function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price
       if (newPrice !== price) updatePlantInfo({ price: newPrice });
       setEditState(false);
     } else alert("Invalid price. Please enter a positive number.");
+
   }, [price, userPrice, updatePlantInfo]);
 
   // Effect to focus the price input field
@@ -70,26 +72,32 @@ function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price
   }, [isEditState, saveNewPrice]);
 
   // Event handlers
+
   const toggleInStock = () => setInStock((prevState) => !prevState);
   const togglePriceEdit = () => setEditState((prevState) => !prevState);
   const handlePriceChange = (e) => setUserPrice(e.target.value);
 
   // Mouse event handlers
-  const handleMouseEnter = () => setHovered(true);
-  const handleMouseLeave = () => setHovered(false);
+
+  const toggleMouseState = () => setHovered(prevState => !prevState);
 
   // Component JSX
+
   return (
     <li
       id={id}
       className="card"
       data-testid={"plant-item"}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{position: "relative"}}
+      onMouseEnter={toggleMouseState}
+      onMouseLeave={toggleMouseState}
     >
+
+      {isHovered && (
+        <div className="delete-banner" onClick={deletePlantInfo}>Delete Plant</div>
+      )}
+
       <img src={image} alt={name} />
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div className="flex cont horiz">
         <h4>{name}</h4>
       </div>
 
@@ -97,60 +105,29 @@ function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price
         <p>Price: ${price}</p>
       ) : (
         <input
+          className="price-input"
           type="number"
           step="0.01"
           ref={priceRef}
           value={userPrice}
-          style={{
-            border: "1px solid var(--green)",
-            fontFamily: "Arial",
-            fontSize: "14px",
-          }}
           onChange={handlePriceChange}
         />
       )}
 
-      <div style={{ display: "flex", flexDirection: "column" }}>
-        {isInStock ? (
-          <button className="primary" onClick={toggleInStock}>
-            In Stock
-          </button>
-        ) : (
-          <button onClick={toggleInStock}>Out of Stock</button>
-        )}
-        {!isEditState ? (
-          <button className="primary" onClick={togglePriceEdit}>
-            Update Price
-          </button>
-        ) : (
-          <button onClick={saveNewPrice}>Save Price</button>
-        )}
+      <div className="flex cont vert">
+        <CardButton
+          activeState={isInStock}
+          actionCallback={toggleInStock}
+          buttonTextTrue="In Stock"
+          buttonTextFalse="Out of Stock"
+        />
+        <CardButton
+          activeState={isEditState}
+          actionCallback={togglePriceEdit}
+          buttonTextTrue="Save Price"
+          buttonTextFalse="Edit Price"
+        />
       </div>
-      {isHovered && (
-        <div
-          onClick={deletePlantInfo}
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "16px",
-            backgroundColor: "black",
-            opacity: 0.35,
-            color: "white",
-            fontWeight: "bold",
-            fontSize: "12px",
-            fontFamily: "Arial",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1,
-            cursor: "pointer"
-          }}
-        >
-          Delete plant
-        </div>
-      )}
     </li>
   );
 }
