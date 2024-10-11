@@ -2,9 +2,13 @@ import React, { useState } from "react";
 
 function NewPlantForm({ pushNewPlant }) {
 
+  // Empty plant object
+
+  const emptyPlant = { name: '', image: '', price: '' };
+
   // State variables
 
-  const [plantInfo, setPlantInfo] = useState({ name: '', image: '', price: '' });
+  const [plantInfo, setPlantInfo] = useState({ ...emptyPlant });
 
   // Event handlers
 
@@ -15,7 +19,7 @@ function NewPlantForm({ pushNewPlant }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     pushNewPlant(plantInfo);
-    setPlantInfo({ name: '', image: '', price: '' });
+    setPlantInfo({ ...emptyPlant });
   };
 
   // Component JSX
@@ -29,6 +33,7 @@ function NewPlantForm({ pushNewPlant }) {
           name="name"
           value={plantInfo.name}
           placeholder="Plant name"
+          autoComplete="off"
           onChange={handleFormInfoChange}
         />
         <input
@@ -36,6 +41,7 @@ function NewPlantForm({ pushNewPlant }) {
           name="image"
           value={plantInfo.image}
           placeholder="Image URL"
+          autoComplete="off"
           onChange={handleFormInfoChange}
           />
         <input

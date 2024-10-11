@@ -17,6 +17,7 @@ h2 {
 }
 
 button {
+  margin: 5px;
   padding: 0.25rem 1rem;
   font-family: inherit;
   border: none;

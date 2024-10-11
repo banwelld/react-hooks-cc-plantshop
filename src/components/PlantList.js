@@ -1,12 +1,17 @@
 import React from "react";
 import PlantCard from "./PlantCard";
 
-function PlantList({ plantData }) {
+function PlantList({ pushUpdate, pushDelete, plantData }) {
 
   // Plant card list
 
   const plantCards = plantData.map((plant) => (
-    <PlantCard key={plant.name} plant={plant} />
+    <PlantCard
+      key={plant.id}
+      pushUpdate={pushUpdate}
+      pushDelete={pushDelete}
+      plantInfo={plant}
+    />
   ));
 
   // Component JSX

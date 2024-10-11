@@ -6,7 +6,7 @@ import Search from "./Search";
 function PlantPage() {
 
   const [plants, setPlants] = useState([]);
-  const [filteredPlants, setFilteredPlants] = useState([]);
+  const [showPlants, setShowPlants] = useState([]);
 
   // Fetch all plants on component mount
 
@@ -21,7 +21,7 @@ function PlantPage() {
       .then((r) => r.json())
       .then((data) => {
         setPlants(data);
-        setFilteredPlants(data);
+        setShowPlants(data);
       });
   };
 
@@ -41,10 +41,22 @@ function PlantPage() {
 
   const filterPlants = useCallback((searchTerm) => {
     const lcTerm = searchTerm.toLowerCase();
-    setFilteredPlants(
+    setShowPlants(
       plants.filter((plant) => searchTerm ? plant.name.toLowerCase().includes(lcTerm) : true)
     );
   }, [plants]);
+
+  const updateSetter = (updatedPlant) => {
+    const newPlants = plants.map((plant) => plant.id === updatedPlant.id ? updatedPlant : plant)
+    setPlants(newPlants);
+    setShowPlants(newPlants);
+  };
+
+  const deleteSetter = (plantId) => {
+    const newPlants = plants.filter((plant) => plant.id!== plantId);
+    setPlants([...newPlants]);
+    setShowPlants([...newPlants]);
+  };
 
   // Component JSX
 
@@ -52,7 +64,14 @@ function PlantPage() {
     <main>
       <NewPlantForm pushNewPlant={addNewPlant}/>
       <Search getSearchTerm={filterPlants}/>
-      {plants.length === 0 ? <h3>Loading...</h3> : <PlantList plantData={filteredPlants}/>}
+      {plants.length === 0 ?
+        <h3>Loading...</h3> :
+        <PlantList 
+          pushDelete={deleteSetter} 
+          pushUpdate={updateSetter} 
+          plantData={showPlants}
+        />
+      }
     </main>
   );
 
