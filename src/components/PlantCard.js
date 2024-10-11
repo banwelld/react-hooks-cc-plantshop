@@ -75,11 +75,8 @@ function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price
 
   const toggleInStock = () => setInStock((prevState) => !prevState);
   const togglePriceEdit = () => setEditState((prevState) => !prevState);
+  const toggleMouseState = () => setHovered((prevState) => !prevState);
   const handlePriceChange = (e) => setUserPrice(e.target.value);
-
-  // Mouse event handlers
-
-  const toggleMouseState = () => setHovered(prevState => !prevState);
 
   // Component JSX
 
@@ -101,18 +98,18 @@ function PlantCard({ pushDelete, pushUpdate, plantInfo: { id, name, image, price
         <h4>{name}</h4>
       </div>
 
-      {!isEditState ? (
-        <p>Price: ${price}</p>
-      ) : (
-        <input
-          className="price-input"
-          type="number"
-          step="0.01"
-          ref={priceRef}
-          value={userPrice}
-          onChange={handlePriceChange}
-        />
-      )}
+      {!isEditState ? <p>Price: {price}</p> :
+        (
+          <input
+            className="price-input"
+            type="number"
+            step="0.01"
+            ref={priceRef}ß
+            value={userPrice}
+            onChange={handlePriceChange}
+          />
+        )
+      }
 
       <div className="flex cont vert">
         <CardButton
