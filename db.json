@@ -10,13 +10,13 @@
       "id": 4,
       "name": "Pothos",
       "image": "./images/pothos.jpg",
-      "price": 12.12
+      "price": 23.89
     },
     {
-      "id": 6,
-      "name": "Monstera Deliciosa",
-      "image": "./images/monstera.jpg",
-      "price": 25.99
+      "name": "Orchid",
+      "image": "https://tcfloralcompany.com/cdn/shop/products/F1901BWcopy.jpg",
+      "price": "25.99",
+      "id": 5
     }
   ]
 }
