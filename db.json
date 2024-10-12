@@ -4,7 +4,7 @@
       "id": 2,
       "name": "ZZ Plant",
       "image": "./images/zz-plant.jpg",
-      "price": 25.98
+      "price": 22.88
     },
     {
       "id": 4,
@@ -17,12 +17,6 @@
       "name": "Monstera Deliciosa",
       "image": "./images/monstera.jpg",
       "price": 25.99
-    },
-    {
-      "name": "Purple Calathea",
-      "image": "https://static.wixstatic.com/media/6a6a51_e191273763014c2888b46abf4000434f~mv2.jpg",
-      "price": 23.19,
-      "id": 7
     }
   ]
 }

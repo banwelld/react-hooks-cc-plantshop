@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import NewPlantForm from "./NewPlantForm";
 import PlantList from "./PlantList";
 import Search from "./Search";
@@ -6,7 +6,7 @@ import Search from "./Search";
 function PlantPage() {
 
   const [plants, setPlants] = useState([]);
-  const [showPlants, setShowPlants] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Fetch all plants on component mount
 
@@ -21,7 +21,6 @@ function PlantPage() {
       .then((r) => r.json())
       .then((data) => {
         setPlants(data);
-        setShowPlants(data);
       });
   };
 
@@ -39,23 +38,21 @@ function PlantPage() {
 
   // Callback props
 
-  const filterPlants = useCallback((searchTerm) => {
-    const lcTerm = searchTerm.toLowerCase();
-    setShowPlants(
-      plants.filter((plant) => searchTerm ? plant.name.toLowerCase().includes(lcTerm) : true)
+  const displayPlants = (filterTerm) => {
+    const lcTerm = filterTerm.toLowerCase();
+    return plants.filter(
+      (plant) => filterTerm ? plant.name.toLowerCase().includes(lcTerm) : true
     );
-  }, [plants]);
+  };
 
   const updateSetter = (updatedPlant) => {
     const newPlants = plants.map((plant) => plant.id === updatedPlant.id ? updatedPlant : plant)
     setPlants(newPlants);
-    setShowPlants(newPlants);
   };
 
   const deleteSetter = (plantId) => {
     const newPlants = plants.filter((plant) => plant.id!== plantId);
     setPlants(newPlants);
-    setShowPlants(newPlants);
   };
 
   // Component JSX
@@ -63,13 +60,16 @@ function PlantPage() {
   return (  
     <main>
       <NewPlantForm pushNewPlant={addNewPlant}/>
-      <Search getSearchTerm={filterPlants}/>
-      {plants.length === 0 ?
-        <h3>Loading...</h3> :
+      <Search
+        getSearchTerm={setSearchTerm}
+        searchTerm={searchTerm}
+      />
+
+      {plants.length === 0 ? <h3>Loading...</h3> :
         <PlantList 
           pushDelete={deleteSetter} 
           pushUpdate={updateSetter} 
-          plantData={showPlants}
+          plantData={displayPlants(searchTerm)}
         />
       }
     </main>
