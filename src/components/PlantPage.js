@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
-import NewPlantForm from "./NewPlantForm";
-import PlantList from "./PlantList";
-import Search from "./Search";
+import React, { useState, useEffect } from 'react';
+import NewPlantForm from './NewPlantForm';
+import PlantList from './PlantList';
+import Search from './Search';
 
 function PlantPage() {
-
   const [plants, setPlants] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -32,49 +31,48 @@ function PlantPage() {
       },
       body: JSON.stringify(plantObj),
     })
-     .then((r) => r.json())
-     .then((newPlant) => setPlants([...plants, newPlant]));
+      .then((r) => r.json())
+      .then((newPlant) => setPlants([...plants, newPlant]));
   };
 
   // Callback props
 
-  const displayPlants = (filterTerm) => {
-    const lcTerm = filterTerm.toLowerCase();
-    return plants.filter(
-      (plant) => filterTerm ? plant.name.toLowerCase().includes(lcTerm) : true
-    );
-  };
+  const displayPlants = plants.filter((plant) =>
+    searchTerm
+      ? plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+      : true
+  );
 
-  const updateSetter = (updatedPlant) => {
-    const newPlants = plants.map((plant) => plant.id === updatedPlant.id ? updatedPlant : plant)
+  const saveNewPlantToList = (updatedPlant) => {
+    const newPlants = plants.map((plant) =>
+      plant.id === updatedPlant.id ? updatedPlant : plant
+    );
     setPlants(newPlants);
   };
 
-  const deleteSetter = (plantId) => {
-    const newPlants = plants.filter((plant) => plant.id!== plantId);
+  const removePlantFromList = (plantId) => {
+    const newPlants = plants.filter((plant) => plant.id !== plantId);
     setPlants(newPlants);
   };
 
   // Component JSX
 
-  return (  
+  return (
     <main>
-      <NewPlantForm pushNewPlant={addNewPlant}/>
-      <Search
-        getSearchTerm={setSearchTerm}
-        searchTerm={searchTerm}
-      />
+      <NewPlantForm pushNewPlant={addNewPlant} />
+      <Search getSearchTerm={setSearchTerm} searchTerm={searchTerm} />
 
-      {plants.length === 0 ? <h3>Loading...</h3> :
-        <PlantList 
-          pushDelete={deleteSetter} 
-          pushUpdate={updateSetter} 
+      {plants.length === 0 ? (
+        <h3>Loading...</h3>
+      ) : (
+        <PlantList
+          pushDelete={removePlantFromList}
+          pushUpdate={saveNewPlantToList}
           plantData={displayPlants(searchTerm)}
         />
-      }
+      )}
     </main>
   );
-
-};
+}
 
 export default PlantPage;
