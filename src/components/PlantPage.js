@@ -37,11 +37,12 @@ function PlantPage() {
 
   // Callback props
 
-  const displayPlants = plants.filter((plant) =>
-    searchTerm
-      ? plant.name.toLowerCase().includes(searchTerm.toLowerCase())
-      : true
-  );
+  const displayPlants = (searchTerm) =>
+    plants.filter((plant) =>
+      searchTerm
+        ? plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+        : true
+    );
 
   const saveNewPlantToList = (updatedPlant) => {
     const newPlants = plants.map((plant) =>
